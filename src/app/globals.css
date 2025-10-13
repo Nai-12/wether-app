@@ -1,0 +1,10 @@
+@import "tailwindcss";
+
+:root {
+  background-color: #222222;
+}
+
+@theme inline {
+  --font-pop: var(--font-poppins);
+  --font-mont: var(--font-montserrat);
+}
