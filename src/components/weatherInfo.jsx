@@ -23,7 +23,6 @@ function WeatherInfo() {
             "Access-Control-Allow-Origin": "*",
           },
         });
-        // const dataWeather = api.data;
         setWeather(api.data);
       } catch (error) {
         console.log(error);
@@ -38,47 +37,12 @@ function WeatherInfo() {
       <div className="hidden justify-center items-center w-full h-[100vh] lg:flex xl:flex xl:gap-3 2xl:gap-10">
         <div
           className={`flex justify-center items-center gap-3 flex-col ${
-            weather ? "hidden" : ""
-          }`}
-          id="search"
-        >
-          <h1 className="text-white font-bold font-mont text-3xl mb-24">
-            Masukan Lokasi
-          </h1>
-          <div
-            className={`flex justify-center items-center gap-3 bg-white z-20 py-1.5 pl-2 pr-5 rounded-3xl ${
-              weather ? "hidden" : "absolute"
-            }`}
-          >
-            <input
-              type="text"
-              aria-label="Input"
-              name="Input Location"
-              id="locate"
-              value={valueInput}
-              onChange={(e) => setValueInput(e.target.value)}
-              className="bg-[#222222] rounded-2xl w-2xs text-white py-1 pl-4 font-pop"
-            />
-            <button
-              type="submit"
-              aria-label="Button"
-              className={`cursor-pointer text-2xl`}
-              onClick={showPrompt.current}
-            >
-              <AiOutlineSearch />
-            </button>
-          </div>
-        </div>
-
-        {/* Kode ini akan mengubah posisi search ke atas list cuaca */}
-        <div
-          className={`flex justify-center items-center gap-3 flex-col ${
-            weather ? "absolute top-6" : "hidden"
+            weather ? "absolute top-6" : ""
           }`}
           id="search"
         >
           <h1
-            className={`text-white font-bold font-mont text-3xl mb-24 ${
+            className={`text-white font-bold font-mont text-3xl mb-0 ${
               weather ? "hidden" : ""
             }`}
           >
@@ -106,7 +70,7 @@ function WeatherInfo() {
             </button>
           </div>
         </div>
-        {/* Kode ini akan mengubah posisi search ke atas list cuaca */}
+
         {button &&
           weather &&
           weather.forecast.forecastday.map((cuaca) => (
@@ -117,7 +81,7 @@ function WeatherInfo() {
             >
               <div className="bg-white rounded-2xl py-1 md:w-6/12 lg:w-[95%] xl:w-20/12">
                 <div className="bg-[#222222] flex justify-between items-center m-4 p-3 rounded-2xl">
-                  <img src={cuaca.day.condition.icon} alt="" />
+                  <img src={cuaca.day.condition.icon} alt="" loading="lazy" />
                   <div className="flex justify-end items-end flex-col text-white mr-3 font-mont">
                     <p>Condition : {cuaca.day.condition.text}</p>
                     <p>Date : {cuaca.date}</p>
@@ -139,8 +103,12 @@ function WeatherInfo() {
                 <div className={`h-[270px] overflow-hidden`}>
                   <div>
                     <div className="flex justify-between items-center mx-3.5 font-mont">
-                      <p className="text-4xl">{cuaca.day.maxtemp_c}°C</p>
-                      <p className="text-4xl">{cuaca.day.mintemp_c}°C</p>
+                      <p className="text-4xl relative after:content-['Min'] after:absolute after:-bottom-3 after:left-0 after:text-sm">
+                        {cuaca.day.mintemp_c}°C
+                      </p>
+                      <p className="text-4xl relative after:content-['Max'] after:absolute after:-bottom-3 after:right-0 after:text-sm">
+                        {cuaca.day.maxtemp_c}°C
+                      </p>
                     </div>
                   </div>
 

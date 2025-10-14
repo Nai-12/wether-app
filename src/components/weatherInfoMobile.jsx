@@ -24,7 +24,6 @@ function WeatherInfoMobile() {
             "Access-Control-Allow-Origin": "*",
           },
         });
-        // const dataWeather = api.data;
         setWeather(api.data);
       } catch (error) {
         console.log(error);
@@ -40,59 +39,24 @@ function WeatherInfoMobile() {
       <div className="flex justify-center items-center w-full h-[100vh] lg:hidden xl:hidden 2xl:hidden">
         <div
           className={`flex justify-center items-center gap-3 flex-col ${
-            weather ? "hidden" : ""
-          }`}
-          id="search"
-        >
-          <h1 className="text-white font-bold font-mont text-3xl mb-24">
-            Masukan Lokasi
-          </h1>
-          <div
-            className={`flex justify-between items-center gap-3 bg-white z-20 py-1.5 pl-2 pr-5 rounded-3xl w-[90%] md:w-[50%] ${
-              weather ? "hidden" : "absolute"
-            }`}
-          >
-            <input
-              type="text"
-              name="Input Location"
-              aria-label="Input"
-              id="locate"
-              value={valueInput}
-              onChange={(e) => setValueInput(e.target.value)}
-              className="bg-[#222222] rounded-2xl w-full text-white py-1 pl-4 font-pop"
-            />
-            <button
-              type="submit"
-              aria-label="Button"
-              className={`text-2xl`}
-              onClick={showPrompt.current}
-            >
-              <AiOutlineSearch />
-            </button>
-          </div>
-        </div>
-
-        {/* Kode ini akan mengubah posisi search ke atas list cuaca */}
-        <div
-          className={`flex justify-center items-center gap-3 flex-col ${
-            weather ? "absolute top-6" : "hidden"
+            weather ? "absolute top-6 left-0 right-0" : ""
           }`}
           id="search"
         >
           <h1
-            className={`text-white font-bold font-mont text-3xl mb-24 ${
+            className={`text-white font-bold font-mont text-3xl mb-0 ${
               weather ? "hidden" : ""
             }`}
           >
             Masukan Lokasi
           </h1>
           <div
-            className={`flex justify-center items-center gap-3 bg-white z-20 py-1.5 pl-2 pr-5 rounded-3xl w-full`}
+            className={`flex justify-between items-center gap-3 bg-white z-20 py-1.5 pl-2 pr-5 rounded-3xl w-[90%] md:w-[50%]`}
           >
             <input
               type="text"
-              aria-label="Input"
               name="Input Location"
+              aria-label="Input"
               id="locate"
               value={valueInput}
               onChange={(e) => setValueInput(e.target.value)}
@@ -108,7 +72,6 @@ function WeatherInfoMobile() {
             </button>
           </div>
         </div>
-        {/* Kode ini akan mengubah posisi search ke atas list cuaca */}
       </div>
       <div
         className={`px-1 absolute top-[25%] bottom-0 left-0 right-0 lg:hidden xl:hidden 2xl:hidden ${
@@ -130,8 +93,12 @@ function WeatherInfoMobile() {
                 <div className=" flex justify-center items-center" id="weather">
                   <div className="bg-white rounded-2xl py-1 w-[100%] md:w-6/12 xl:w-20/12">
                     <div className="bg-[#222222] flex justify-between items-center m-4 p-3 rounded-2xl">
-                      <img src={cuaca.day.condition.icon} alt="" />
-                      <div className="flex justify-end items-end flex-col text-white mr-3">
+                      <img
+                        src={cuaca.day.condition.icon}
+                        alt=""
+                        loading="lazy"
+                      />
+                      <div className="flex justify-end items-end flex-col font-mont text-white mr-3">
                         <p>Condition : {cuaca.day.condition.text}</p>
                         <p>Date : {cuaca.date}</p>
                       </div>
@@ -144,18 +111,24 @@ function WeatherInfoMobile() {
                       <h3 className="font-bold text-[18px] w-56 text-start">
                         {weather.location.name}, {weather.location.country}
                       </h3>
-                      <p className="w-36 text-end">{weather.location.region}</p>
+                      <p className="w-36 text-end font-pop">
+                        {weather.location.region}
+                      </p>
                     </div>
 
                     <div className={`h-[270px] overflow-hidden`}>
                       <div>
-                        <div className="flex justify-between items-center mx-3.5">
-                          <p className="text-5xl">{cuaca.day.maxtemp_c}°C</p>
-                          <p className="text-5xl">{cuaca.day.mintemp_c}°C</p>
+                        <div className="flex justify-between items-center mx-3.5 font-mont">
+                          <p className="text-4xl relative after:content-['Min'] after:absolute after:-bottom-3 after:left-0 after:text-sm">
+                            {cuaca.day.mintemp_c}°C
+                          </p>
+                          <p className="text-4xl relative after:content-['Max'] after:absolute after:-bottom-3 after:right-0 after:text-sm">
+                            {cuaca.day.maxtemp_c}°C
+                          </p>
                         </div>
                       </div>
 
-                      <div className="bg-[#222222] flex justify-between items-center flex-col m-4 p-3 rounded-2xl text-white py-6 px-5">
+                      <div className="bg-[#222222] flex justify-between items-center flex-col m-4 p-3 rounded-2xl text-white py-6 px-5 font-pop">
                         <div className="w-full ">
                           <div className="flex justify-between items-center">
                             <div className="flex justify-center items-center gap-3">
