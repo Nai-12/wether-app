@@ -38,7 +38,7 @@ function WeatherInfoMobile() {
     <>
       <div className="flex justify-center items-center w-full h-[100vh] lg:hidden xl:hidden 2xl:hidden">
         <div
-          className={`flex justify-center items-center gap-3 flex-col ${
+          className={`flex justify-center items-center gap-3 flex-col md:w-full ${
             weather ? "absolute top-6 left-0 right-0" : ""
           }`}
           id="search"
@@ -82,9 +82,6 @@ function WeatherInfoMobile() {
           modules={[Scrollbar, A11y]}
           spaceBetween={50}
           slidesPerView={1}
-          scrollbar={{ draggable: true }}
-          onSwiper={(swiper) => console.log(swiper)}
-          onSlideChange={() => console.log("slide change")}
         >
           {button &&
             weather &&
