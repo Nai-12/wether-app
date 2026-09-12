@@ -31,22 +31,26 @@ export async function GET(request) {
 
   const desa = matchKecamatan.map((list) => list.desa);
   const check =
-    desa.length > 1 ? (desa.length < 1 ? desa[0] : desa[1]) : desa[0];
-  // console.log(desa);
-  console.log(check);
+    desa.length <= 0 ? (desa.length >= 0 ? desa[0] : desa) : desa[0];
   const matchKelurahan = await check.find((admKel) => admKel.nama === adm4);
 
   // proses melakukan api call ke server bmkg
-  const get = await axios.get(
-    `https://api.bmkg.go.id/publik/prakiraan-cuaca?adm4=${matchKelurahan.kode}`,
-    {
-      headers: {
-        Accept: "application/json",
+  try {
+    const get = await axios.get(
+      `https://api.bmkg.go.id/publik/prakiraan-cuaca?adm4=${matchKelurahan.kode}`,
+      {
+        headers: {
+          Accept: "application/json",
+        },
       },
-    },
-  );
-  const json = await get.data;
+    );
+    const json = await get.data;
+    return NextResponse.json(json);
+  } catch (err) {
+    return NextResponse.json({
+      code: 500,
+      message: "Terjadi kesalahan saat melakukan fetch api",
+    });
+  }
   // proses melakukan api call ke server bmkg
-
-  return NextResponse.json(json);
 }

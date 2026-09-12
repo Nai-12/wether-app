@@ -4,12 +4,14 @@ import axios from "axios";
 import { useRef, useState } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
 import WeatherInfoMobile from "./weatherInfoMobile";
+import Image from "next/image";
 
 function WeatherInfo() {
   const [weather, setWeather] = useState(null);
   const [button, setButton] = useState(false);
   const [valueInput, setValueInput] = useState("");
   const showPrompt = useRef();
+  const area = valueInput.replace(/\s+/g, "").split(",");
 
   showPrompt.current = () => {
     if (valueInput) {
@@ -18,11 +20,14 @@ function WeatherInfo() {
 
     async function run() {
       try {
-        const api = await axios.get(`/api/weather/${valueInput}`, {
-          headers: {
-            "Access-Control-Allow-Origin": "*",
+        const api = await axios.get(
+          `/api/weather?adm3=${area[0]}&adm4=${area[1]}`,
+          {
+            headers: {
+              "Access-Control-Allow-Origin": "*",
+            },
           },
-        });
+        );
         setWeather(api.data);
       } catch (error) {
         console.log(error);
@@ -34,10 +39,10 @@ function WeatherInfo() {
   };
   return (
     <>
-      <div className="hidden justify-center items-center w-full h-[100vh] lg:flex xl:flex xl:gap-3 2xl:gap-10">
+      <div className="flex-wrap pt-20 pb-20 justify-center items-center w-full h-[100vh] overflow-scroll lg:flex xl:flex xl:gap-3 2xl:gap-10">
         <div
           className={`flex justify-center items-center gap-3 flex-col ${
-            weather ? "absolute top-6" : ""
+            weather ? "absolute top-6 w-full" : ""
           }`}
           id="search"
         >
@@ -57,6 +62,7 @@ function WeatherInfo() {
               name="Input Location"
               id="locate"
               value={valueInput}
+              placeholder="Contoh: Kecamatan, Kelurahan"
               onChange={(e) => setValueInput(e.target.value)}
               className="bg-[#222222] rounded-2xl w-2xs text-white py-1 pl-4 font-pop"
             />
@@ -73,18 +79,24 @@ function WeatherInfo() {
 
         {button &&
           weather &&
-          weather.forecast.forecastday.map((cuaca) => (
+          weather.data[0].cuaca[1].map((cuaca) => (
             <div
               className=" flex justify-center items-center mt-10"
               id="weather"
-              key={cuaca.date_epoch}
+              key={cuaca.datetime}
             >
-              <div className="bg-white rounded-2xl py-1 md:w-6/12 lg:w-[95%] xl:w-20/12">
+              <div className="bg-white h-[30rem] rounded-2xl py-1 md:w-6/12 lg:w-[95%] xl:w-20/12">
                 <div className="bg-[#222222] flex justify-between items-center m-4 p-3 rounded-2xl">
-                  <img src={cuaca.day.condition.icon} alt="" loading="lazy" />
+                  <Image
+                    src={cuaca.image}
+                    width={70}
+                    height={70}
+                    alt="Icon weather"
+                    loading="eager"
+                  />
                   <div className="flex justify-end items-end flex-col text-white mr-3 font-mont">
-                    <p>Condition : {cuaca.day.condition.text}</p>
-                    <p>Date : {cuaca.date}</p>
+                    <p>Kondisi : {cuaca.weather_desc}</p>
+                    <p>Tanggal : {cuaca.datetime.split("T")[0]}</p>
                   </div>
                 </div>
 
@@ -93,26 +105,26 @@ function WeatherInfo() {
                   id="location"
                 >
                   <h3 className="font-bold text-[15px] w-56 text-start font-mont">
-                    {weather.location.name}, {weather.location.country}
+                    {weather.lokasi.kecamatan}, {weather.lokasi.desa}
                   </h3>
                   <p className="w-36 text-end font-pop">
-                    {weather.location.region}
+                    {weather.lokasi.kotkab}
                   </p>
                 </div>
 
-                <div className={`h-[270px] overflow-hidden`}>
+                <div className={`h-[270px]`}>
                   <div>
                     <div className="flex justify-between items-center mx-3.5 font-mont">
                       <p className="text-4xl relative after:content-['Min'] after:absolute after:-bottom-3 after:left-0 after:text-sm">
-                        {cuaca.day.mintemp_c}°C
+                        {cuaca.tcc}%
                       </p>
                       <p className="text-4xl relative after:content-['Max'] after:absolute after:-bottom-3 after:right-0 after:text-sm">
-                        {cuaca.day.maxtemp_c}°C
+                        {cuaca.t}°C
                       </p>
                     </div>
                   </div>
 
-                  <div className="bg-[#222222] flex justify-between items-center flex-col m-4 p-3 rounded-2xl text-white py-6 px-5 font-mont">
+                  <div className="bg-[#222222] flex  justify-between items-center flex-col m-4 p-3 rounded-2xl text-white py-6 px-5 font-mont">
                     <div className="w-full ">
                       <div className="flex justify-between items-center">
                         <div className="flex justify-center items-center gap-3">
@@ -131,7 +143,7 @@ function WeatherInfo() {
                           <p className="font-light text-sm">Wind Speed</p>
                         </div>
                         <p className="text-[18px] font-medium">
-                          {cuaca.day.maxwind_kph} Kph
+                          {cuaca.ws} Kph
                         </p>
                       </div>
                       <hr className="mt-3" />
@@ -161,7 +173,7 @@ function WeatherInfo() {
                           <p className="font-light text-sm">Humidity</p>
                         </div>
                         <p className="text-[18px] font-medium">
-                          {cuaca.day.avghumidity} g/m³
+                          {cuaca.hu} g/m³
                         </p>
                       </div>
                       <hr className="mt-3" />
@@ -183,8 +195,32 @@ function WeatherInfo() {
                           </svg>
                           <p className="font-light text-sm">Precip</p>
                         </div>
+                        <p className="text-[18px] font-medium">{cuaca.tp} mm</p>
+                      </div>
+                      <hr className="mt-3" />
+                    </div>
+                    <div className="w-full pt-3">
+                      <div className="flex justify-between items-center">
+                        <div className="flex justify-center items-center gap-3">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            className="lucide lucide-eye"
+                          >
+                            <path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0" />
+                            <circle cx="12" cy="12" r="3" />
+                          </svg>
+                          <p className="font-light text-sm">Visibility</p>
+                        </div>
                         <p className="text-[18px] font-medium">
-                          {cuaca.day.totalprecip_mm} mm
+                          {cuaca.vs_text}
                         </p>
                       </div>
                       <hr className="mt-3" />
@@ -195,7 +231,7 @@ function WeatherInfo() {
             </div>
           ))}
       </div>
-      <WeatherInfoMobile />
+      {/* <WeatherInfoMobile /> */}
     </>
   );
 }

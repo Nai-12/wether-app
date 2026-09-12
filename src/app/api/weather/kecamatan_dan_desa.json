@@ -168574,6 +168574,62 @@
       {
         "kode": "33.21.10.2015",
         "nama": "gempolsongo"
+      },
+      {
+        "kode": "33.74.14.1001",
+        "nama": "cangkiran"
+      },
+      {
+        "kode": "33.74.14.1002",
+        "nama": "bubakan"
+      },
+      {
+        "kode": "33.74.14.1003",
+        "nama": "karangmalang"
+      },
+      {
+        "kode": "33.74.14.1004",
+        "nama": "polaman"
+      },
+      {
+        "kode": "33.74.14.1005",
+        "nama": "purwosari"
+      },
+      {
+        "kode": "33.74.14.1006",
+        "nama": "tambangan"
+      },
+      {
+        "kode": "33.74.14.1007",
+        "nama": "wonolopo"
+      },
+      {
+        "kode": "33.74.14.1008",
+        "nama": "mijen"
+      },
+      {
+        "kode": "33.74.14.1009",
+        "nama": "jatibarang"
+      },
+      {
+        "kode": "33.74.14.1010",
+        "nama": "kedungpane"
+      },
+      {
+        "kode": "33.74.14.1011",
+        "nama": "ngadirgo"
+      },
+      {
+        "kode": "33.74.14.1012",
+        "nama": "wonoplumbon"
+      },
+      {
+        "kode": "33.74.14.1013",
+        "nama": "jatisari"
+      },
+      {
+        "kode": "33.74.14.1014",
+        "nama": "pesantren"
       }
     ]
   },
@@ -179452,68 +179508,6 @@
       {
         "kode": "33.74.13.1016",
         "nama": "kembangarum"
-      }
-    ]
-  },
-  {
-    "kode": "33.74.14",
-    "nama": "mijen",
-    "desa": [
-      {
-        "kode": "33.74.14.1001",
-        "nama": "cangkiran"
-      },
-      {
-        "kode": "33.74.14.1002",
-        "nama": "bubakan"
-      },
-      {
-        "kode": "33.74.14.1003",
-        "nama": "karangmalang"
-      },
-      {
-        "kode": "33.74.14.1004",
-        "nama": "polaman"
-      },
-      {
-        "kode": "33.74.14.1005",
-        "nama": "purwosari"
-      },
-      {
-        "kode": "33.74.14.1006",
-        "nama": "tambangan"
-      },
-      {
-        "kode": "33.74.14.1007",
-        "nama": "wonolopo"
-      },
-      {
-        "kode": "33.74.14.1008",
-        "nama": "mijen"
-      },
-      {
-        "kode": "33.74.14.1009",
-        "nama": "jatibarang"
-      },
-      {
-        "kode": "33.74.14.1010",
-        "nama": "kedungpane"
-      },
-      {
-        "kode": "33.74.14.1011",
-        "nama": "ngadirgo"
-      },
-      {
-        "kode": "33.74.14.1012",
-        "nama": "wonoplumbon"
-      },
-      {
-        "kode": "33.74.14.1013",
-        "nama": "jatisari"
-      },
-      {
-        "kode": "33.74.14.1014",
-        "nama": "pesantren"
       }
     ]
   },
