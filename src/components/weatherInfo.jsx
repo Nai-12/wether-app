@@ -5,11 +5,13 @@ import { useRef, useState } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
 import Image from "next/image";
 import NotFound from "./error";
+import Loading from "../app/loading";
 
 function WeatherInfo() {
   const [weather, setWeather] = useState(null);
   const [button, setButton] = useState(false);
   const [valueInput, setValueInput] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const showPrompt = useRef();
   const area = valueInput.replace(/\s+/g, "").split(",");
 
@@ -17,6 +19,7 @@ function WeatherInfo() {
     if (valueInput) {
       setButton(true);
     } else return alert("Masukan lokasi anda");
+    setIsLoading(true);
 
     async function run() {
       try {
@@ -33,6 +36,8 @@ function WeatherInfo() {
         console.log(error);
         alert("Gagal mengambil data cuaca. Periksa konsol untuk detail.");
         setButton(false);
+      } finally {
+        setIsLoading(false);
       }
     }
     run();
@@ -41,7 +46,7 @@ function WeatherInfo() {
   };
   return (
     <>
-      <div className="flex-wrap pt-20 pb-20 justify-center items-center w-full h-[100vh] overflow-scroll lg:flex xl:flex xl:gap-3 2xl:gap-10">
+      <div className="flex-wrap pt-10 pb-20 justify-center items-center w-full h-full overflow-scroll lg:flex xl:flex xl:gap-3 2xl:gap-10">
         <div
           className={`flex justify-center items-center gap-3 flex-col ${
             weather ? "absolute top-6 w-full" : ""
@@ -56,7 +61,7 @@ function WeatherInfo() {
             Masukan Lokasi
           </h1>
           <div
-            className={`flex justify-center items-center gap-3 bg-white z-20 py-1.5 pl-2 pr-5 rounded-3xl`}
+            className={`flex justify-center items-center gap-3 bg-white z-20 py-1.5 pl-2 pr-5 mx-3 rounded-3xl`}
           >
             <input
               type="text"
@@ -66,7 +71,7 @@ function WeatherInfo() {
               value={valueInput}
               placeholder="Contoh: Kecamatan, Kelurahan"
               onChange={(e) => setValueInput(e.target.value)}
-              className="bg-[#222222] rounded-2xl w-2xs text-white py-1 pl-4 font-pop"
+              className="bg-[#222222] rounded-2xl w-full text-white py-1 pl-4 font-pop"
             />
             <button
               type="submit"
@@ -79,7 +84,9 @@ function WeatherInfo() {
           </div>
         </div>
 
-        {button && weather && weather.code === 500 ? (
+        {button && isLoading ? (
+          <Loading />
+        ) : weather && weather?.code === 500 ? (
           <NotFound />
         ) : (
           weather &&
@@ -89,7 +96,7 @@ function WeatherInfo() {
               id="weather"
               key={cuaca.datetime}
             >
-              <div className="bg-white h-[31rem] rounded-2xl py-1 md:w-6/12 lg:w-[95%] xl:w-20/12">
+              <div className="bg-white h-[31rem] rounded-2xl py-1 w-[95%] md:w-6/12 lg:w-[95%] xl:w-11/12">
                 <div className="bg-[#222222] flex justify-between items-center m-4 p-3 rounded-2xl">
                   <Image
                     src={cuaca.image}
@@ -111,7 +118,7 @@ function WeatherInfo() {
                   <h3 className="font-bold text-[15px] w-56 text-start font-mont">
                     {weather.lokasi.kecamatan}, {weather.lokasi.desa}
                   </h3>
-                  <p className="w-36 text-end font-pop">
+                  <p className="w-56 text-end font-pop">
                     {weather.lokasi.kotkab}
                   </p>
                 </div>
