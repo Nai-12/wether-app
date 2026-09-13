@@ -3,8 +3,8 @@
 import axios from "axios";
 import { useRef, useState } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
-import WeatherInfoMobile from "./weatherInfoMobile";
 import Image from "next/image";
+import NotFound from "./error";
 
 function WeatherInfo() {
   const [weather, setWeather] = useState(null);
@@ -77,7 +77,9 @@ function WeatherInfo() {
           </div>
         </div>
 
-        {button &&
+        {button && weather && weather.code === 500 ? (
+          <NotFound />
+        ) : (
           weather &&
           weather.data[0].cuaca[1].map((cuaca) => (
             <div
@@ -229,7 +231,8 @@ function WeatherInfo() {
                 </div>
               </div>
             </div>
-          ))}
+          ))
+        )}
       </div>
       {/* <WeatherInfoMobile /> */}
     </>
