@@ -14,14 +14,7 @@ export async function GET(request) {
       message: "Masukan nama kecamatan serta kelurahan anda",
     });
 
-  const jsonDir = path.join(
-    process.cwd(),
-    "src",
-    "app",
-    "api",
-    "weather",
-    "kecamatan_dan_desa.json",
-  );
+  const jsonDir = path.join(process.cwd(), "public", "kecamatan_dan_desa.json");
 
   const readFileJson = fs.readFileSync(jsonDir, "utf-8");
   const parseJson = JSON.parse(readFileJson);

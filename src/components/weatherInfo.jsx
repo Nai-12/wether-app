@@ -36,6 +36,8 @@ function WeatherInfo() {
       }
     }
     run();
+
+    setValueInput("");
   };
   return (
     <>
@@ -87,7 +89,7 @@ function WeatherInfo() {
               id="weather"
               key={cuaca.datetime}
             >
-              <div className="bg-white h-[30rem] rounded-2xl py-1 md:w-6/12 lg:w-[95%] xl:w-20/12">
+              <div className="bg-white h-[31rem] rounded-2xl py-1 md:w-6/12 lg:w-[95%] xl:w-20/12">
                 <div className="bg-[#222222] flex justify-between items-center m-4 p-3 rounded-2xl">
                   <Image
                     src={cuaca.image}
@@ -117,16 +119,16 @@ function WeatherInfo() {
                 <div className={`h-[270px]`}>
                   <div>
                     <div className="flex justify-between items-center mx-3.5 font-mont">
-                      <p className="text-4xl relative after:content-['Min'] after:absolute after:-bottom-3 after:left-0 after:text-sm">
+                      <p className="text-4xl relative after:content-['Cloud_Cover'] after:w-32 after:absolute after:-bottom-4 after:left-0 after:text-sm">
                         {cuaca.tcc}%
                       </p>
-                      <p className="text-4xl relative after:content-['Max'] after:absolute after:-bottom-3 after:right-0 after:text-sm">
+                      <p className="text-4xl relative after:content-['Temperature'] after:absolute after:-bottom-4 after:right-0 after:text-sm">
                         {cuaca.t}°C
                       </p>
                     </div>
                   </div>
 
-                  <div className="bg-[#222222] flex  justify-between items-center flex-col m-4 p-3 rounded-2xl text-white py-6 px-5 font-mont">
+                  <div className="bg-[#222222] flex justify-between items-center flex-col m-4 mt-8 p-3 rounded-2xl text-white py-6 px-5 font-mont">
                     <div className="w-full ">
                       <div className="flex justify-between items-center">
                         <div className="flex justify-center items-center gap-3">
