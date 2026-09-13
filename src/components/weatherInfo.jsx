@@ -49,7 +49,7 @@ function WeatherInfo() {
       <div className="flex-wrap pt-10 pb-20 justify-center items-center w-full h-full overflow-scroll lg:flex xl:flex xl:gap-3 2xl:gap-10">
         <div
           className={`flex justify-center items-center gap-3 flex-col ${
-            weather ? "absolute top-6 w-full" : ""
+            weather ? "fixed top-6 w-full" : ""
           }`}
           id="search"
         >
