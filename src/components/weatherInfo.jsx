@@ -46,10 +46,10 @@ function WeatherInfo() {
   };
   return (
     <>
-      <div className="flex-wrap pt-10 pb-20 justify-center items-center w-full h-full overflow-scroll lg:flex xl:flex xl:gap-3 2xl:gap-10">
+      <div className="flex-wrap mt-15 pb-20 justify-center items-center w-full h-full overflow-scroll lg:flex xl:flex xl:gap-1 2xl:gap-10">
         <div
           className={`flex justify-center items-center gap-3 flex-col ${
-            weather ? "fixed top-6 w-full" : ""
+            weather ? "fixed z-10 top-6 w-full" : ""
           }`}
           id="search"
         >
@@ -92,7 +92,7 @@ function WeatherInfo() {
           weather &&
           weather.data[0].cuaca[1].map((cuaca) => (
             <div
-              className=" flex justify-center items-center mt-10"
+              className="flex justify-center items-center mt-10"
               id="weather"
               key={cuaca.datetime}
             >
