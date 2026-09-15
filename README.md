@@ -1,39 +1,38 @@
-# Weather App
+# Weather app
 
-Web application that can display weather data by inputting weather data according to the location using API from [WeatherAPI](https://www.weatherapi.com/).
+Aplikasi web yang dapat menampilkan data cuaca berdasarkan lokasi yang dimasukkan, menggunakan API dari BMKG.
 
-#### The project will continue to be updated, because there is no work anyway :D
+#### Proyek ini akan terus diperbarui, karena toh tidak ada pekerjaan lain selain kuliah :D
 
-## installation
+## instalasi
 
-To deploy the web
+Untuk men-deploy web
 
-### Install Module First
+### Install dependensi
 
 ```bash
 npm i
 ```
 
-To install all the modules required by the project
+Untuk menginstal semua modul yang diperlukan oleh proyek tersebut
 
-## Enter apikey into environment
+## Masukan rest url dan rest token dari upstash
 
 ```bash
-KEY= <-- Enter the apikey you got in [https://www.weatherapi.com/]
+UPSTASH_REDIS_REST_URL=
+UPSTASH_REDIS_REST_TOKEN=
 ```
 
-Replace the .env.example file to .env
+Ganti .env.example dengan .env
 
-### Run the Web
+### Jalankan website
 
 ```bash
 npm run dev
 ```
 
-This is useful for us to be able to see the results of the web that we have worked on, npm run dev itself is used during development sessions to make it easier to change/modify the project.
+Hal ini berguna agar kita dapat melihat hasil dari web yang telah kita kerjakan.
 
-## License
-
-[MIT](https://choosealicense.com/licenses/mit/)
+`npm run dev` sendiri digunakan selama tahap pengembangan untuk mempermudah perubahan atau modifikasi pada proyek.
 
 # That's all :p
