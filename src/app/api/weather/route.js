@@ -16,10 +16,13 @@ export async function GET(request) {
   const keyCache = `weather:${adm3?.toLowerCase()}, ${adm4?.toLowerCase()}`;
 
   if (!success)
-    return NextResponse.json({ code: 429, message: "Terlalu banyak request" });
+    return NextResponse.json({
+      status: 429,
+      message: "Terlalu banyak request",
+    });
   if (!adm3 && !adm4)
     return NextResponse.json({
-      code: 404,
+      status: 404,
       message: "Masukan nama kecamatan serta kelurahan anda",
     });
 
@@ -52,10 +55,11 @@ export async function GET(request) {
     );
     const json = await get.data;
     await redis.setex(keyCache, 600, JSON.stringify(json));
+    console.log("api call");
     return NextResponse.json(json);
   } catch (err) {
     return NextResponse.json({
-      code: 500,
+      status: 500,
       message: "Terjadi kesalahan saat melakukan fetch api",
     });
   }
