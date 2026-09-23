@@ -33,8 +33,7 @@ function WeatherInfo() {
         );
         setWeather(api.data);
       } catch (error) {
-        console.log(error);
-        alert("Gagal mengambil data cuaca. Periksa konsol untuk detail.");
+        alert("Gagal mengambil data cuaca. Silahkan input ulang");
         setButton(false);
       } finally {
         setIsLoading(false);

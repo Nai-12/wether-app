@@ -80,7 +80,6 @@ export async function GET(request) {
     );
     const json = await get.data;
     await redis.setex(keyCache, 600, JSON.stringify(json));
-    console.log("api call");
     return NextResponse.json(json);
   } catch (err) {
     return NextResponse.json({
