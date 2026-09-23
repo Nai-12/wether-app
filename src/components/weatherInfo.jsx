@@ -44,6 +44,11 @@ function WeatherInfo() {
 
     setValueInput("");
   };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    showPrompt.current;
+  };
   return (
     <>
       <div className="flex-wrap mt-15 pb-20 justify-center items-center w-full h-full overflow-scroll lg:flex xl:flex xl:gap-1 2xl:gap-10">
@@ -60,7 +65,8 @@ function WeatherInfo() {
           >
             Masukan Lokasi
           </h1>
-          <div
+          <form
+            onSubmit={handleSubmit}
             className={`flex justify-center items-center gap-3 bg-white z-20 py-1.5 pl-2 pr-5 mx-3 rounded-3xl`}
           >
             <input
@@ -81,7 +87,7 @@ function WeatherInfo() {
             >
               <AiOutlineSearch />
             </button>
-          </div>
+          </form>
         </div>
 
         {button && isLoading ? (
