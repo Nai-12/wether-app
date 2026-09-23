@@ -15,6 +15,7 @@ export async function GET(request) {
   const adm4 = searchParams.get("adm4");
   const keyCache = `weather:${adm3?.toLowerCase()}, ${adm4?.toLowerCase()}`;
 
+  // Error handle buat parameter undefined
   if (!success)
     return NextResponse.json({
       status: 429,
@@ -25,6 +26,17 @@ export async function GET(request) {
       status: 404,
       message: "Masukan nama kecamatan serta kelurahan anda",
     });
+  if (!adm3)
+    return NextResponse.json({
+      status: 404,
+      message: "Masukan nama kecamatan anda",
+    });
+  if (!adm4)
+    return NextResponse.json({
+      status: 404,
+      message: "Masukan nama kelurahan anda",
+    });
+  // Error handle buat parameter undefined
 
   // cek kalau di cache ada
   const cached = await redis.get(keyCache);
@@ -42,6 +54,19 @@ export async function GET(request) {
   const check =
     desa.length <= 0 ? (desa.length >= 0 ? desa[0] : desa) : desa[0];
   const matchKelurahan = await check.find((admKel) => admKel.nama === adm4);
+
+  // Error handle buat matching
+  if (parseJson.includes(adm3))
+    return NextResponse.json({
+      status: 404,
+      message: "Nama kecamatan tidak terdaftar",
+    });
+  if (parseJson.includes(adm4))
+    return NextResponse.json({
+      status: 404,
+      message: "Nama kelurahan tidak terdaftar",
+    });
+  // Error handle buat matching
 
   // proses melakukan api call ke server bmkg
   try {
