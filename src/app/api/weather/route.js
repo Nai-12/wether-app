@@ -50,23 +50,26 @@ export async function GET(request) {
     (admName) => admName.nama === adm3,
   );
 
+  // Error handle buat matching kecamatan
+  if (Array.isArray(matchKecamatan) && matchKecamatan.length === 0)
+    return NextResponse.json({
+      status: 404,
+      message: "Nama kecamatan tidak terdaftar",
+    });
+  // Error handle buat matching kecamatan
+
   const desa = matchKecamatan.map((list) => list.desa);
   const check =
     desa.length <= 0 ? (desa.length >= 0 ? desa[0] : desa) : desa[0];
   const matchKelurahan = await check.find((admKel) => admKel.nama === adm4);
 
-  // Error handle buat matching
-  if (parseJson.includes(adm3))
-    return NextResponse.json({
-      status: 404,
-      message: "Nama kecamatan tidak terdaftar",
-    });
-  if (parseJson.includes(adm4))
+  // Error handle buat matching kelurahan
+  if (matchKelurahan === undefined)
     return NextResponse.json({
       status: 404,
       message: "Nama kelurahan tidak terdaftar",
     });
-  // Error handle buat matching
+  // Error handle buat matching kelurahan
 
   // proses melakukan api call ke server bmkg
   try {
