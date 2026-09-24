@@ -260,7 +260,6 @@ function WeatherInfo() {
           )
         )}
       </div>
-      {/* <WeatherInfoMobile /> */}
     </>
   );
 }

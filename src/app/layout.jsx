@@ -1,5 +1,6 @@
 import { Montserrat, Poppins } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 
 const poppins = Poppins({
@@ -26,6 +27,7 @@ export default function RootLayout({ children }) {
       >
         {children}
         <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
