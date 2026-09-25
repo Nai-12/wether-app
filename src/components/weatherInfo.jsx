@@ -50,7 +50,7 @@ function WeatherInfo() {
   };
   return (
     <>
-      <div className="flex-wrap mt-15 pb-20 justify-center items-center w-full h-full overflow-scroll lg:flex xl:flex xl:gap-1 2xl:gap-10">
+      <div className="flex-wrap mt-15 pb-20 justify-center items-center w-full h-full lg:flex xl:flex xl:gap-1 2xl:gap-10">
         <div
           className={`flex justify-center items-center gap-3 flex-col ${
             weather ? "fixed z-10 top-6 w-full" : ""

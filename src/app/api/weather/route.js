@@ -7,20 +7,22 @@ import path from "path";
 
 export async function GET(request) {
   const { searchParams } = new URL(request.url);
+  const adm3 = searchParams.get("adm3");
+  const adm4 = searchParams.get("adm4");
 
   // ratelimiting
   const ip = request.headers.get("x-forwarded-for") ?? "127.0.01";
   const { success } = await ratelimit.limit(ip);
-  const adm3 = searchParams.get("adm3");
-  const adm4 = searchParams.get("adm4");
   const keyCache = `weather:${adm3?.toLowerCase()}, ${adm4?.toLowerCase()}`;
 
-  // Error handle buat parameter undefined
   if (!success)
     return NextResponse.json({
       status: 429,
       message: "Terlalu banyak request",
     });
+  // ratelimiting22
+
+  // Error handle buat parameter undefined
   if (!adm3 && !adm4)
     return NextResponse.json({
       status: 404,
@@ -35,6 +37,11 @@ export async function GET(request) {
     return NextResponse.json({
       status: 404,
       message: "Masukan nama kelurahan anda",
+    });
+  if (!/^[a-zA-Z\s,.-]+$/.test(adm3) || !/^[a-zA-Z\s,.-]+$/.test(adm4))
+    return NextResponse.json({
+      status: 404,
+      message: "Masukan nama yang valid",
     });
   // Error handle buat parameter undefined
 
@@ -74,7 +81,7 @@ export async function GET(request) {
   // proses melakukan api call ke server bmkg
   try {
     const get = await axios.get(
-      `https://api.bmkg.go.id/publik/prakiraan-cuaca?adm4=${matchKelurahan.kode}`,
+      `https://api.bmkg.go.id/publik/prakiraan-cuaca?adm4=${encodeURIComponent(matchKelurahan.kode)}`,
       {
         headers: {
           Accept: "application/json",
