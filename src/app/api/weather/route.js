@@ -69,6 +69,7 @@ export async function GET(request) {
   const check =
     desa.length <= 0 ? (desa.length >= 0 ? desa[0] : desa) : desa[0];
   const matchKelurahan = await check.find((admKel) => admKel.nama === adm4);
+  console.log(matchKelurahan);
 
   // Error handle buat matching kelurahan
   if (matchKelurahan === undefined)

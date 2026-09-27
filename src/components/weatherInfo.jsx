@@ -7,6 +7,7 @@ import Image from "next/image";
 import NotFound from "./error";
 import Loading from "../app/loading";
 import lang from "../lib/lang";
+import comp from "../lib/compas";
 
 function WeatherInfo() {
   const [weather, setWeather] = useState(null);
@@ -54,6 +55,7 @@ function WeatherInfo() {
   const handleChangeLang = () => {
     setLangs(!langs);
   };
+
   return (
     <>
       <div className="flex-wrap mt-20 pb-20 justify-center items-center w-full h-full lg:flex xl:flex xl:gap-1 xl:mt-13 2xl:gap-10">
@@ -278,8 +280,9 @@ function WeatherInfo() {
                                 </p>
                               </div>
                               <p className="text-[18px] font-medium">
-                                {cuaca.wd} {langs ? lang.en.ke : lang.id.ke}{" "}
-                                {cuaca.wd_to}
+                                {langs ? cuaca.wd : comp[cuaca.wd]}{" "}
+                                {langs ? lang.en.ke : lang.id.ke}{" "}
+                                {langs ? cuaca.wd_to : comp[cuaca.wd_to]}
                               </p>
                             </div>
                             <hr className="mt-3" />
