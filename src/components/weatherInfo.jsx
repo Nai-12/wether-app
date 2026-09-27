@@ -6,12 +6,14 @@ import { AiOutlineSearch } from "react-icons/ai";
 import Image from "next/image";
 import NotFound from "./error";
 import Loading from "../app/loading";
+import lang from "../lib/lang";
 
 function WeatherInfo() {
   const [weather, setWeather] = useState(null);
   const [button, setButton] = useState(false);
   const [valueInput, setValueInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [langs, setLangs] = useState(false);
   const showPrompt = useRef();
   const area = valueInput.replace(/\s+/g, "").split(",");
 
@@ -48,9 +50,13 @@ function WeatherInfo() {
     e.preventDefault();
     showPrompt.current;
   };
+
+  const handleChangeLang = () => {
+    setLangs(!langs);
+  };
   return (
     <>
-      <div className="flex-wrap mt-15 pb-20 justify-center items-center w-full h-full lg:flex xl:flex xl:gap-1 2xl:gap-10">
+      <div className="flex-wrap mt-20 pb-20 justify-center items-center w-full h-full lg:flex xl:flex xl:gap-1 2xl:gap-10">
         <div
           className={`flex justify-center items-center gap-3 flex-col ${
             weather ? "fixed z-10 top-6 w-full" : ""
@@ -62,7 +68,7 @@ function WeatherInfo() {
               weather ? "hidden" : ""
             }`}
           >
-            Masukan Lokasi
+            {langs ? lang.en.input : lang.id.input}
           </h1>
           <form
             onSubmit={handleSubmit}
@@ -85,6 +91,18 @@ function WeatherInfo() {
               onClick={showPrompt.current}
             >
               <AiOutlineSearch />
+            </button>
+            <button
+              type="submit"
+              aria-label="Button"
+              className="cursor-pointer"
+              onClick={handleChangeLang}
+            >
+              {langs ? (
+                <p className="text-2xl">🇮🇩</p>
+              ) : (
+                <p className="text-2xl">🇺🇸</p>
+              )}
             </button>
           </form>
         </div>
@@ -116,8 +134,14 @@ function WeatherInfo() {
                           loading="eager"
                         />
                         <div className="flex justify-end items-end flex-col text-white mr-3 font-mont">
-                          <p>Kondisi : {cuaca.weather_desc}</p>
-                          <p>Tanggal : {cuaca.datetime.split("T")[0]}</p>
+                          <p>
+                            {langs ? lang.en.kondisi : lang.id.kondisi} :{" "}
+                            {cuaca.weather_desc}
+                          </p>
+                          <p>
+                            {langs ? lang.en.tanggal : lang.id.tanggal} :{" "}
+                            {cuaca.datetime.split("T")[0]}
+                          </p>
                         </div>
                       </div>
 
@@ -136,16 +160,18 @@ function WeatherInfo() {
                       <div className={`h-[270px]`}>
                         <div>
                           <div className="flex justify-between items-center mx-3.5 font-mont">
-                            <p className="text-4xl relative after:content-['Tutupan_Awan'] after:w-32 after:absolute after:-bottom-4 after:left-0 after:text-sm">
-                              {cuaca.tcc}%
-                            </p>
-                            <p className="text-4xl relative after:content-['Temperatur'] after:absolute after:-bottom-4 after:right-0 after:text-sm">
-                              {cuaca.t}°C
-                            </p>
+                            <div>
+                              <p className={`text-4xl`}>{cuaca.tcc}%</p>
+                              <p>{langs ? lang.en.awan : lang.id.awan}</p>
+                            </div>
+                            <div>
+                              <p className={`text-4xl`}>{cuaca.t}°C</p>
+                              <p>{langs ? lang.en.temp : lang.id.temp}</p>
+                            </div>
                           </div>
                         </div>
 
-                        <div className="bg-[#222222] flex justify-between items-center flex-col m-4 mt-8 p-3 rounded-2xl text-white py-6 px-5 font-mont">
+                        <div className="bg-[#222222] flex justify-between items-center flex-col m-4 p-3 rounded-2xl text-white py-6 px-5 font-mont">
                           <div className="w-full ">
                             <div className="flex justify-between items-center">
                               <div className="flex justify-center items-center gap-3">
@@ -162,7 +188,7 @@ function WeatherInfo() {
                                   />
                                 </svg>
                                 <p className="font-light text-sm">
-                                  Kecepatan Angin
+                                  {langs ? lang.en.angin : lang.id.angin}
                                 </p>
                               </div>
                               <p className="text-[18px] font-medium">
@@ -193,7 +219,9 @@ function WeatherInfo() {
                                     <path d="M4 12.284c1.465-.454 4.392-.6 7.984 1.418c3.586 2.014 6.532 1.296 8.016.433" />
                                   </g>
                                 </svg>
-                                <p className="font-light text-sm">Kelembaban</p>
+                                <p className="font-light text-sm">
+                                  {langs ? lang.en.kelm : lang.id.kelm}
+                                </p>
                               </div>
                               <p className="text-[18px] font-medium">
                                 {cuaca.hu} g/m³
@@ -217,7 +245,7 @@ function WeatherInfo() {
                                   />
                                 </svg>
                                 <p className="font-light text-sm">
-                                  Curah Hujan
+                                  {langs ? lang.en.hujan : lang.id.hujan}
                                 </p>
                               </div>
                               <p className="text-[18px] font-medium">
@@ -239,16 +267,19 @@ function WeatherInfo() {
                                   strokeWidth="2"
                                   strokeLinecap="round"
                                   strokeLinejoin="round"
-                                  class="lucide lucide-wind preview-icon"
+                                  className="lucide lucide-wind preview-icon"
                                 >
                                   <path d="M12.8 19.6A2 2 0 1 0 14 16H2" />
                                   <path d="M17.5 8a2.5 2.5 0 1 1 2 4H2" />
                                   <path d="M9.8 4.4A2 2 0 1 1 11 8H2" />
                                 </svg>
-                                <p className="font-light text-sm">Arah angin</p>
+                                <p className="font-light text-sm">
+                                  {langs ? lang.en.arahang : lang.id.arahang}
+                                </p>
                               </div>
                               <p className="text-[18px] font-medium">
-                                {cuaca.wd} ke {cuaca.wd_to}
+                                {cuaca.wd} {langs ? lang.en.ke : lang.id.ke}{" "}
+                                {cuaca.wd_to}
                               </p>
                             </div>
                             <hr className="mt-3" />
