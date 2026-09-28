@@ -16,7 +16,9 @@ export default function Home() {
         </p>
         <div className="flex justify-center items-center gap-2">
           <Image src="/bmkg.svg" alt="bmkg image" width={30} height={30} />
-          <h1 className="font-pop font-bold">BMKG</h1>
+          <a href="https://www.bmkg.go.id/" className="font-pop font-bold">
+            BMKG
+          </a>
         </div>
       </footer>
     </>
